@@ -1,0 +1,3 @@
+h1. README
+
+This project contains subprojects for all of the JGlobus modules.  In order to initialize them, run the init.sh script.

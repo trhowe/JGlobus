@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.jglobus</groupId>
+    <artifactId>parent</artifactId>
+    <version>2.0-SNAPSHOT</version>
+    <modules>
+        <module>ssl-proxies</module>
+        <module>gss</module>
+        <module>ssl-proxies-jboss</module>
+        <module></module>
+        <module>build-tools</module>
+    </modules>
+    <name>JGlobus 2.0</name>
+    <packaging>pom</packaging>
+
+
+    <issueManagement>
+        <system>JIRA</system>
+        <url>http://jira.globus.org/browse/JGLOBUS</url>
+    </issueManagement>
+
+    <distributionManagement>
+        <repository>
+            <id>globus.release.repository</id>
+            <url>http://repo.globus.org/content/repositories/releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>globus.snapshot.repository</id>
+            <url>http://repo.globus.org/content/repositories/snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
+
+    <properties>
+        <slf4j.version>1.6.1</slf4j.version>
+        <logback.version>0.9.24</logback.version>
+        <bc.version>1.45</bc.version>
+        <codec.version>1.4</codec.version>
+        <commonsio.version>1.4</commonsio.version>
+        <httpclient.version>4.0.1</httpclient.version>
+        <commonslang.version>2.4</commonslang.version>
+        <junit.version>4.8.1</junit.version>
+    </properties>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <configuration>
+                        <source>1.5</source>
+                        <target>1.5</target>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <phase>deploy</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+        </plugins>
+    </build>
+
+    <profiles>
+        <profile>
+            <id>reporting</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-checkstyle-plugin</artifactId>
+                        <version>2.5</version>
+                        <dependencies>
+                            <dependency>
+                                <groupId>${groupId}</groupId>
+                                <artifactId>build-tools</artifactId>
+                                <version>${version}</version>
+                            </dependency>
+                        </dependencies>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.sonatype.maven.plugin</groupId>
+                        <artifactId>emma-maven-plugin</artifactId>
+                        <version>1.2</version>
+                        <inherited>true</inherited>
+                        <executions>
+                            <execution>
+                                <phase>process-classes</phase>
+                                <goals>
+                                    <goal>instrument</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <inherited>true</inherited>
+                        <configuration>
+                            <forkMode>once</forkMode>
+                            <reportFormat>xml</reportFormat>
+                            <classesDirectory>${project.build.directory}/generated-classes/emma/classes
+                            </classesDirectory>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+            <reporting>
+                <plugins>
+                    <plugin>
+                        <groupId>org.sonatype.maven.plugin</groupId>
+                        <artifactId>emma-maven-plugin</artifactId>
+                        <version>1.2</version>
+                        <inherited>true</inherited>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-checkstyle-plugin</artifactId>
+                        <version>2.5</version>
+                    </plugin>
+
+                </plugins>
+            </reporting>
+        </profile>
+    </profiles>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>${slf4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.bouncycastle</groupId>
+                <artifactId>bcprov-jdk15</artifactId>
+                <version>${bc.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.bouncycastle</groupId>
+                <artifactId>bcprov-ext-jdk15</artifactId>
+                <version>${bc.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-codec</groupId>
+                <artifactId>commons-codec</artifactId>
+                <version>${codec.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>${commonsio.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-lang</groupId>
+                <artifactId>commons-lang</artifactId>
+                <version>${commonslang.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-access</artifactId>
+                <version>${logback.version}</version>
+                <scope>test</scope>
+            </dependency>
+
+        </dependencies>
+    </dependencyManagement>
+
+    <repositories>
+        <repository>
+            <id>globus-releases</id>
+            <name>Globus Release Repository</name>
+            <url>http://repo.globus.org/content/groups/public/</url>
+        </repository>
+        <repository>
+            <id>globus-snapshots</id>
+            <name>Globus Snapshot Repository</name>
+            <url>http://repo.globus.org/content/groups/public-snapshots/</url>
+        </repository>
+    </repositories>
+</project>
