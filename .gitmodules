@@ -1,0 +1,12 @@
+[submodule "ssl-proxies-tomcat"]
+	path = ssl-proxies-tomcat
+	url = git://github.com/trhowe/JGlobus-SSL-Proxies-Tomcat.git
+[submodule "ssl-proxies-jboss"]
+	path = ssl-proxies-jboss
+	url = git://github.com/trhowe/JGlobus-SSL-Proxies-JBoss.git
+[submodule "ssl-proxies"]
+	path = ssl-proxies
+	url = git://github.com/trhowe/JGlobus-SSL-Proxies.git
+[submodule "gss"]
+	path = gss
+	url = git://github.com/trhowe/JGlobus-GSS.git
