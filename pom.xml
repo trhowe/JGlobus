@@ -137,6 +137,35 @@
                 </plugins>
             </reporting>
         </profile>
+        <profile>
+            <id>bamboo</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <inherited>false</inherited>                                    
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <version>1.1</version>
+                        <executions>
+                            <execution>
+                                <phase>initialize</phase>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <executable>bash</executable>
+                            <!-- optional -->
+                            <workingDirectory>${project.basedir}</workingDirectory>
+                            <arguments>
+                                <argument>./init.sh</argument>
+                            </arguments>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
     </profiles>
 
     <dependencyManagement>
